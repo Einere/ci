@@ -1,0 +1,12 @@
+<?php  
+defined('BASEPATH') OR exit('No direct script access allowed');  
+  
+class Hello extends CI_Controller {  
+  
+    public function newfunction()  
+    {  
+        $this->load->view('hello_world');
+        $this->load->helper('url');
+    } 
+}  
+?>  
