@@ -102,10 +102,26 @@ class Main extends CI_Controller {
                 "lxrb0tech2", 
                 "luxrobo1!",
                 "kiwi");
+            $id = $this->input->post('memid'); 
+            $pw = $this->input->post('mempw');
+            $firstname = $this->input->post('memfirstname');
+            $lastname = $this->input->post('memlastname');
+            $birth = $this->input->post('membirth');
+            $addr = $this->input->post('memaddr');
+            $nickname = $this->input->post('memnickname');
+            // var_dump($id);
+            // var_dump($pw);
+            // var_dump($firstname);
+            // var_dump($lastname);
+            // var_dump($birth);
+            // var_dump($addr);
             mysqli_query($conn, "
                 INSERT INTO member
                 (memid, mempw, memfirstname, memlastname, membirth, memaddr)
-                ");
+                VALUES(
+                '$id', '$pw', '$firstname', '$lastname', '$birth', '$addr', '$nickname'
+                )
+            ");
          } else {  
             $this->load->view('signin');  
         }  
