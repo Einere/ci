@@ -60,7 +60,7 @@ class Main extends CI_Controller {
     {  
         $this->load->library('form_validation');  
 
-        // $this->form_validation->set_rules('memid', 'ID', 'required|trim|xss_clean|is_unique[signup.memid]');
+        //////////////////////////////검사///////////////////////////////////////////
         $this->form_validation->set_rules('memid', 'ID', 'required|trim|alpha_numeric'); 
 
         $this->form_validation->set_rules('mempw', 'Password', 'required|trim|alpha_numeric');  
@@ -75,33 +75,26 @@ class Main extends CI_Controller {
         
         $this->form_validation->set_rules('memaddr', 'Address', 'required|trim');
         
-        // $this->form_validation->set_rules('eemail', 'Email', 'required|trim|is_unique[signup.eemail]');
+        
         $this->form_validation->set_rules('eemail', 'Email', 'required|trim');
         
-        // $this->form_validation->set_rules('phphonenum', 'Phone number', 'required|trim|is_unique[signphphonenum]');
+        
         $this->form_validation->set_rules('phphonenum', 'Phone number', 'required|trim|numeric|min_length[11]');  
 
 
-
-  
-        // $this->form_validation->set_rules('username', 'Username', 'trim|xss_clean|is_unique[signup.username]');  
-  
-        // $this->form_validation->set_rules('password', 'Password', 'required|trim');  
-  
-        // $this->form_validation->set_rules('cpassword', 'Confirm Password', 'required|trim|matches[password]'); 
-        
-        // $this->form_validation->set_rules('email', 'email', 'required|trim'); 
-  
-        // $this->form_validation->set_message('is_unique', 'username already exists');  
-  
+        //회원가입 성공
         if ($this->form_validation->run())  
         {   
             echo "Welcome, you are logged in.";
+
+            //DB연결
             $conn = mysqli_connect(
                 "lxrb0tech2.csaf2qenttko.us-east-2.rds.amazonaws.com",
                 "lxrb0tech2", 
                 "luxrobo1!",
                 "kiwi");
+
+            //넘어온 데이터 저장
             $id = $this->input->post('memid'); 
             $pw = $this->input->post('mempw');
             $firstname = $this->input->post('memfirstname');
@@ -109,20 +102,19 @@ class Main extends CI_Controller {
             $birth = $this->input->post('membirth');
             $addr = $this->input->post('memaddr');
             $nickname = $this->input->post('memnickname');
-            // var_dump($id);
-            // var_dump($pw);
-            // var_dump($firstname);
-            // var_dump($lastname);
-            // var_dump($birth);
-            // var_dump($addr);
+
+            //DB에 저장
             mysqli_query($conn, "
                 INSERT INTO member
-                (memid, mempw, memfirstname, memlastname, membirth, memaddr)
+                (memid, mempw, memfirstname, memlastname, membirth, memaddr, memnickname)
                 VALUES(
                 '$id', '$pw', '$firstname', '$lastname', '$birth', '$addr', '$nickname'
                 )
             ");
-         } else {  
+         } 
+        
+        //회원가입 실패
+        else {  
             $this->load->view('signin');  
         }  
     }  
