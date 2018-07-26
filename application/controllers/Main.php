@@ -63,7 +63,7 @@ class Main extends CI_Controller {
         // $this->form_validation->set_rules('memid', 'ID', 'required|trim|xss_clean|is_unique[signup.memid]');
         $this->form_validation->set_rules('memid', 'ID', 'required|trim|alpha_numeric'); 
 
-        $this->form_validation->set_rules('mempw', 'Password', 'required|trim||alpha_numeric');  
+        $this->form_validation->set_rules('mempw', 'Password', 'required|trim|alpha_numeric');  
 
         $this->form_validation->set_rules('memcpw', 'Confirm Password', 'required|trim|matches[mempw]'); 
 
@@ -76,7 +76,7 @@ class Main extends CI_Controller {
         $this->form_validation->set_rules('memaddr', 'Address', 'required|trim');
         
         // $this->form_validation->set_rules('eemail', 'Email', 'required|trim|is_unique[signup.eemail]');
-        $this->form_validation->set_rules('eemail', 'Email', 'required|trim|alpha');
+        $this->form_validation->set_rules('eemail', 'Email', 'required|trim');
         
         // $this->form_validation->set_rules('phphonenum', 'Phone number', 'required|trim|is_unique[signphphonenum]');
         $this->form_validation->set_rules('phphonenum', 'Phone number', 'required|trim|numeric|min_length[11]');  
@@ -96,7 +96,16 @@ class Main extends CI_Controller {
   
         if ($this->form_validation->run())  
         {   
-            echo "Welcome, you are logged in.";  
+            echo "Welcome, you are logged in.";
+            $conn = mysqli_connect(
+                "lxrb0tech2.csaf2qenttko.us-east-2.rds.amazonaws.com",
+                "lxrb0tech2", 
+                "luxrobo1!",
+                "kiwi");
+            mysqli_query($conn, "
+                INSERT INTO member
+                (memid, mempw, memfirstname, memlastname, membirth, memaddr)
+                ");
          } else {  
             $this->load->view('signin');  
         }  
