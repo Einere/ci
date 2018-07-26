@@ -59,17 +59,43 @@ class Main extends CI_Controller {
     public function signin_validation()  
     {  
         $this->load->library('form_validation');  
+
+        // $this->form_validation->set_rules('memid', 'ID', 'required|trim|xss_clean|is_unique[signup.memid]');
+        $this->form_validation->set_rules('memid', 'ID', 'required|trim|alpha_numeric'); 
+
+        $this->form_validation->set_rules('mempw', 'Password', 'required|trim||alpha_numeric');  
+
+        $this->form_validation->set_rules('memcpw', 'Confirm Password', 'required|trim|matches[mempw]'); 
+
+        $this->form_validation->set_rules('memfirstname', 'First name', 'required|trim');  
+
+        $this->form_validation->set_rules('memlastname', 'Last name', 'required|trim');  
+
+        $this->form_validation->set_rules('membirth', 'Birth day', 'required|trim|numeric|min_length[8]');
+        
+        $this->form_validation->set_rules('memaddr', 'Address', 'required|trim');
+        
+        // $this->form_validation->set_rules('eemail', 'Email', 'required|trim|is_unique[signup.eemail]');
+        $this->form_validation->set_rules('eemail', 'Email', 'required|trim|alpha');
+        
+        // $this->form_validation->set_rules('phphonenum', 'Phone number', 'required|trim|is_unique[signphphonenum]');
+        $this->form_validation->set_rules('phphonenum', 'Phone number', 'required|trim|numeric|min_length[11]');  
+
+
+
   
-        $this->form_validation->set_rules('username', 'Username', 'trim|xss_clean|is_unique[signup.username]');  
+        // $this->form_validation->set_rules('username', 'Username', 'trim|xss_clean|is_unique[signup.username]');  
   
-        $this->form_validation->set_rules('password', 'Password', 'required|trim');  
+        // $this->form_validation->set_rules('password', 'Password', 'required|trim');  
   
-        $this->form_validation->set_rules('cpassword', 'Confirm Password', 'required|trim|matches[password]');  
+        // $this->form_validation->set_rules('cpassword', 'Confirm Password', 'required|trim|matches[password]'); 
+        
+        // $this->form_validation->set_rules('email', 'email', 'required|trim'); 
   
-        $this->form_validation->set_message('is_unique', 'username already exists');  
+        // $this->form_validation->set_message('is_unique', 'username already exists');  
   
         if ($this->form_validation->run())  
-        {  
+        {   
             echo "Welcome, you are logged in.";  
          } else {  
             $this->load->view('signin');  
