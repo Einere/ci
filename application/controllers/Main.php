@@ -58,10 +58,11 @@ class Main extends CI_Controller {
   
     public function signin_validation()  
     {  
-        $this->load->library('form_validation');  
+        $this->load->library('form_validation');
 
+        
         //////////////////////////////검사///////////////////////////////////////////
-        $this->form_validation->set_rules('memid', 'ID', 'required|trim|alpha_numeric'); 
+        $this->form_validation->set_rules('memid', 'ID', 'required|trim|alpha_numeric|is_unique[member.memid]'); 
 
         $this->form_validation->set_rules('mempw', 'Password', 'required|trim|alpha_numeric');  
 
@@ -76,23 +77,21 @@ class Main extends CI_Controller {
         $this->form_validation->set_rules('memaddr', 'Address', 'required|trim');
         
         
-        $this->form_validation->set_rules('eemail', 'Email', 'required|trim');
+        $this->form_validation->set_rules('eemail', 'Email', 'required|trim|is_unique[emaillist.eemail]');
+        $this->form_validation->set_rules('eemail2', 'Email2', 'trim|is_unique[emaillist.eemail]');
         
         
-        $this->form_validation->set_rules('phphonenum', 'Phone number', 'required|trim|numeric|min_length[11]');  
+        $this->form_validation->set_rules('phphonenum', 'Phone number', 'required|trim|numeric|min_length[11]|is_unique[phone.phphonenum]');
+        $this->form_validation->set_rules('phphonenum', 'Phone number', 'trim|numeric|min_length[11]|is_unique[phone.phphonenum]');    
+
+
+        $this->form_validation->set_rules('memnickname', 'Nick name', 'required|trim|is_unique[member.memnickname]'); 
 
 
         //회원가입 성공
         if ($this->form_validation->run())  
         {   
             echo "Welcome, you are logged in.";
-
-            //DB연결
-            $conn = mysqli_connect(
-                "lxrb0tech2.csaf2qenttko.us-east-2.rds.amazonaws.com",
-                "lxrb0tech2", 
-                "luxrobo1!",
-                "kiwi");
 
             //넘어온 데이터 저장
             $id = $this->input->post('memid'); 
@@ -102,16 +101,66 @@ class Main extends CI_Controller {
             $birth = $this->input->post('membirth');
             $addr = $this->input->post('memaddr');
             $nickname = $this->input->post('memnickname');
+            $email = $this->input->post('eemail'); 
+            $email2 = $this->input->post('eemail2'); 
+            $phonenum = $this->input->post('phphonenum'); 
+            $phonenum2 = $this->input->post('phphonenum2'); 
 
-            //DB에 저장
-            mysqli_query($conn, "
-                INSERT INTO member
-                (memid, mempw, memfirstname, memlastname, membirth, memaddr, memnickname)
-                VALUES(
-                '$id', '$pw', '$firstname', '$lastname', '$birth', '$addr', '$nickname'
-                )
+            //DB연결
+            $conn = mysqli_connect(
+                "lxrb0tech2.csaf2qenttko.us-east-2.rds.amazonaws.com",
+                "lxrb0tech2", 
+                "luxrobo1!",
+                "kiwi");
+           
+           //member table에 저장
+           mysqli_query($conn, "
+           INSERT INTO member
+           (memid, mempw, memfirstname, memlastname, membirth, memaddr, memnickname)
+           VALUES(
+           '$id', '$pw', '$firstname', '$lastname', '$birth', '$addr', '$nickname')
             ");
-         } 
+
+            $sql = "SELECT * FROM member WHERE memid = '$id'";
+            $result = mysqli_query($conn, $sql);
+            $row = mysqli_fetch_array($result);
+            $memseq = $row['memseq'];
+            // echo $row['memseq']';
+
+            //emaillist table에 저장
+            mysqli_query($conn, "
+            INSERT INTO emaillist
+            (member_memseq, eemail)
+            VALUES(
+            '$memseq', '$email')
+             ");
+
+            if($email2!=NULL){
+            mysqli_query($conn, "
+            INSERT INTO emaillist
+            (member_memseq, eemail)
+            VALUES(
+            '$memseq', '$email2')
+                ");
+            }
+
+             //phphonenum table에 저장
+             mysqli_query($conn, "
+             INSERT INTO phone
+             (member_memseq, phphonenum)
+             VALUES(
+             '$memseq', '$phonenum')
+              ");
+
+             if($phonenum2!=NULL){
+             mysqli_query($conn, "
+             INSERT INTO phone
+             (member_memseq, phphonenum)
+             VALUES(
+             '$memseq', '$phonenum2')
+                 ");
+             }
+        } 
         
         //회원가입 실패
         else {  

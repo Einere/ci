@@ -44,10 +44,25 @@
     
     echo "<p>Email : ";
     echo form_input('eemail');
+    
+    $eemail2 = array(
+        'name'        => 'eemail2',
+        'id'          => 'eemail2',
+        'placeholder' => '추가입력(선택)'
+      );
+    echo form_input($eemail2);
+    
     echo "</p>";
 
+
     echo "<p>Phone number : ";  
-    echo form_input('phphonenum');  
+    echo form_input('phphonenum');
+    $phphonenum2 = array(
+        'name'        => 'phphonenum2',
+        'placeholder' => '추가입력(선택)'
+      );
+    echo form_input($phphonenum2);  
+    echo "'-'없이 입력해주세요(ex.01011112222)";
     echo "</p>";
     
 
