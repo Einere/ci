@@ -22,7 +22,8 @@ class Main extends CI_Controller {
     {  
         if ($this->session->userdata('currently_logged_in'))   
         {  
-            $this->load->view('data');  
+            //$this->load->view('data');
+            redirect('board');  
         } else {  
             redirect('Main/invalid');  
         }  
