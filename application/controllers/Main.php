@@ -121,11 +121,11 @@ class Main extends CI_Controller {
            '$id', '$pw', '$firstname', '$lastname', '$birth', '$addr', '$nickname')
             ");
 
+            //memver table에서 memseq가져옴
             $sql = "SELECT * FROM member WHERE memid = '$id'";
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_array($result);
             $memseq = $row['memseq'];
-            // echo $row['memseq']';
 
             //emaillist table에 저장
             mysqli_query($conn, "
@@ -135,6 +135,7 @@ class Main extends CI_Controller {
             '$memseq', '$email')
              ");
 
+            //email이 두개면
             if($email2!=NULL){
             mysqli_query($conn, "
             INSERT INTO emaillist
@@ -152,6 +153,7 @@ class Main extends CI_Controller {
              '$memseq', '$phonenum')
               ");
 
+            //phonenum이 두개면
              if($phonenum2!=NULL){
              mysqli_query($conn, "
              INSERT INTO phone

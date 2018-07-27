@@ -47,7 +47,6 @@
     
     $eemail2 = array(
         'name'        => 'eemail2',
-        'id'          => 'eemail2',
         'placeholder' => '추가입력(선택)'
       );
     echo form_input($eemail2);
