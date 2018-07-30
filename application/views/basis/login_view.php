@@ -9,7 +9,7 @@
       
     <?php  
   
-    echo form_open('module/basis/MemberController/login_action');  
+    echo form_open('modules/basis/MemberController/login_action');  
   
     echo validation_errors();  
   

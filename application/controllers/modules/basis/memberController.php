@@ -25,7 +25,7 @@ class MemberController extends CI_Controller {
             //$this->load->view('data');
             redirect('board');  
         } else {  
-            redirect('Main/invalid');  
+            redirect('modules/basis/MemberController/invalid');  
         }  
     }  
   
@@ -50,10 +50,10 @@ class MemberController extends CI_Controller {
                 'currently_logged_in' => 1  
                 );    
                 $this->session->set_userdata($data);  
-                redirect('Main/data');  
+                redirect('modules/basis/MemberController/data');  
         }   
         else {  
-            $this->load->view('login_view');  
+            $this->load->view('basis/login_view');  
         }  
     }  
   
