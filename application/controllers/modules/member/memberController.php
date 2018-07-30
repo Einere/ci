@@ -10,28 +10,27 @@ class MemberController extends CI_Controller {
   
     public function login()  
     {  
-        $this->load->view('basis/login_view');  
+        $this->load->view('modules/member/loginView');  
     }  
   
     public function signin()  
     {  
-        $this->load->view('basis/signin');  
+        $this->load->view('modules/member/signinView');  
     }  
   
     public function data()  
     {  
         if ($this->session->userdata('currently_logged_in'))   
-        {  
-            //$this->load->view('data');
-            redirect('board');  
+        {   
+            redirect('modules/board/BoardController');  
         } else {  
-            redirect('modules/basis/MemberController/invalid');  
+            redirect('modules/member/MemberController/invalid');  
         }  
     }  
   
     public function invalid()  
     {  
-        $this->load->view('invalid');  
+        $this->load->view('modules/member/invalidView');  
     }  
   
     public function login_action()  
@@ -50,10 +49,10 @@ class MemberController extends CI_Controller {
                 'currently_logged_in' => 1  
                 );    
                 $this->session->set_userdata($data);  
-                redirect('modules/basis/MemberController/data');  
+                redirect('modules/member/MemberController/data');  
         }   
         else {  
-            $this->load->view('basis/login_view');  
+            $this->load->view('modules/member/loginView');  
         }  
     }  
   
@@ -61,7 +60,6 @@ class MemberController extends CI_Controller {
     {  
         $this->load->library('form_validation');
 
-        
         //////////////////////////////검사///////////////////////////////////////////
         $this->form_validation->set_rules('memid', 'ID', 'required|trim|alpha_numeric|is_unique[member.memid]'); 
 
@@ -77,17 +75,13 @@ class MemberController extends CI_Controller {
         
         $this->form_validation->set_rules('memaddr', 'Address', 'required|trim');
         
-        
         $this->form_validation->set_rules('eemail', 'Email', 'required|trim|is_unique[emaillist.eemail]');
         $this->form_validation->set_rules('eemail2', 'Email2', 'trim|is_unique[emaillist.eemail]');
-        
         
         $this->form_validation->set_rules('phphonenum', 'Phone number', 'required|trim|numeric|min_length[11]|is_unique[phone.phphonenum]');
         $this->form_validation->set_rules('phphonenum', 'Phone number', 'trim|numeric|min_length[11]|is_unique[phone.phphonenum]');    
 
-
         $this->form_validation->set_rules('memnickname', 'Nick name', 'required|trim|is_unique[member.memnickname]'); 
-
 
         //회원가입 성공
         if ($this->form_validation->run())  
@@ -167,15 +161,15 @@ class MemberController extends CI_Controller {
         
         //회원가입 실패
         else {  
-            $this->load->view('signin');  
+            $this->load->view('modules/member/signinView');  
         }  
     }  
   
     public function validation()  
     {  
-        $this->load->model('login_model');  
+        $this->load->model('modules/member/loginModel');  
   
-        if ($this->login_model->log_in_correctly())  
+        if ($this->loginModel->log_in_correctly())  
         {  
             return true;  
         } else {  
@@ -187,7 +181,7 @@ class MemberController extends CI_Controller {
     public function logout()  
     {  
         $this->session->sess_destroy();  
-        redirect('Main/login');  
+        redirect('modules/member/MemberController/login');  
     }  
   
 }  

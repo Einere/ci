@@ -1,6 +1,6 @@
 <?php  
   
-class Login_model extends CI_Model {  
+class LoginModel extends CI_Model {  
   
     public function log_in_correctly() {  
         // $this->db->where('username', $this->input->post('username'));  

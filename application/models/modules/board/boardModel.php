@@ -1,5 +1,5 @@
 <?php
-    class board_m extends CI_Model {
+    class BoardModel extends CI_Model {
         function _construct() {
             parent::_construct();
         }

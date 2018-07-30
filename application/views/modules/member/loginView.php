@@ -9,7 +9,7 @@
       
     <?php  
   
-    echo form_open('modules/basis/MemberController/login_action');  
+    echo form_open('modules/member/MemberController/login_action');  
   
     echo validation_errors();  
   
@@ -29,6 +29,6 @@
   
     ?>  
   
-    <a href='<?php echo base_url()."index.php/modules/basis/MemberController/signin"; ?>'>Sign In</a>     
+    <a href='<?php echo base_url()."index.php/modules/member/MemberController/signin"; ?>'>Sign In</a>     
 </body>  
 </html>  

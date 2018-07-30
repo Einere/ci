@@ -8,7 +8,7 @@
   
     <?php  
   
-    echo form_open('modules/basis/MemberController/signin_validation');  
+    echo form_open('modules/member/MemberController/signin_validation');  
   
     echo validation_errors();  
   
@@ -75,6 +75,6 @@
   
     echo form_close();  
     ?>  
-    <a href='<?php echo base_url()."index.php/modules/basis/MemberController/login"; ?>'>cancel</a>
+    <a href='<?php echo base_url()."index.php/modules/member/MemberController/login"; ?>'>cancel</a>
 </body>  
 </html>  

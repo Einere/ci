@@ -12,7 +12,7 @@
     echo "</pre>";  
     ?>  
   
-    <a href='<?php echo base_url()."index.php/Main/logout"; ?>'>Logout</a>  
+    <a href='<?php echo base_url()."index.php/modules/member/MemberController/logout"; ?>'>Logout</a>  
   
 </body>  
 </html>  
