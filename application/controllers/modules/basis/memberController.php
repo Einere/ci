@@ -1,7 +1,7 @@
 <?php  
 defined('BASEPATH') OR exit('No direct script access allowed');  
   
-class Main extends CI_Controller {  
+class MemberController extends CI_Controller {  
   
     public function index()  
     {  
@@ -10,12 +10,12 @@ class Main extends CI_Controller {
   
     public function login()  
     {  
-        $this->load->view('login_view');  
+        $this->load->view('basis/login_view');  
     }  
   
     public function signin()  
     {  
-        $this->load->view('signin');  
+        $this->load->view('basis/signin');  
     }  
   
     public function data()  
