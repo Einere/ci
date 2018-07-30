@@ -167,15 +167,20 @@ class MemberController extends CI_Controller {
   
     public function validation()  
     {  
-        $this->load->model('modules/member/loginModel');  
-  
-        if ($this->loginModel->log_in_correctly())  
+        //$this->load->model('modules/member/loginModel');  
+        $this->load->library('query/modules/connect');
+        $conn = $this->connect->get_conn();
+        //var_dump($conn);
+        $this->load->library('query/modules/member/loginQuery');
+        $result = $this->loginQuery->log_in_correctly($conn);  
+        $result = true;
+        if ($result == true)  
         {  
             return true;  
         } else {  
             $this->form_validation->set_message('validation', 'Incorrect username/password.');  
             return false;  
-        }  
+        } 
     }  
   
     public function logout()  
