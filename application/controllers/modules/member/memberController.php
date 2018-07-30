@@ -40,8 +40,7 @@ class MemberController extends CI_Controller {
   
         $this->form_validation->set_rules('username', 'Username:', 'required|trim|xss_clean|callback_validation');  
         $this->form_validation->set_rules('password', 'Password:', 'required|trim');  
-  
-        //call validation() method
+
         if ($this->form_validation->run())   
         {  
             $data = array(  
@@ -53,7 +52,7 @@ class MemberController extends CI_Controller {
         }   
         else {  
             $this->load->view('modules/member/loginView');  
-        }  
+        }
     }  
   
     public function signin_validation()  
@@ -170,11 +169,12 @@ class MemberController extends CI_Controller {
         //$this->load->model('modules/member/loginModel');  
         $this->load->library('query/modules/connect');
         $conn = $this->connect->get_conn();
-        //var_dump($conn);
-        $this->load->library('query/modules/member/loginQuery');
-        $result = $this->loginQuery->log_in_correctly($conn);  
-        $result = true;
-        if ($result == true)  
+
+        $this->load->library('query/modules/member/loginquery');
+        $id = $this->input->post('username');
+        $pw = $this->input->post('password');
+        $result = $this->loginquery->log_in_correctly($conn, $id, $pw);  
+        if ($result -> num_rows == 1)  
         {  
             return true;  
         } else {  

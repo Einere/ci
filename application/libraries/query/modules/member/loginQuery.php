@@ -1,8 +1,8 @@
 <?php  
     defined('BASEPATH') OR exit('No direct script access allowed');
 
-class LoginQuery {    
-    function log_in_correctly($conn) {  
+class loginquery {    
+    function log_in_correctly($conn, $id, $pw) {  
         // $this->db->where('username', $this->input->post('username'));  
         // $this->db->where('password', $this->input->post('password'));  
         // $query = $this->db->get('signup'); 
@@ -14,8 +14,8 @@ class LoginQuery {
         //     "luxrobo1!",
         //     "kiwi");
 
-         $id = $this->input->post('username');
-         $pw = $this->input->post('password');
+        // $id = $this->input->post('username');
+        // $pw = $this->input->post('password');
         // var_dump($id);
         // var_dump($pw);
         $query = "SELECT * FROM member WHERE memid = '$id' AND mempw = '$pw'";
