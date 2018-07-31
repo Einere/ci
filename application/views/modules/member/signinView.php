@@ -32,8 +32,12 @@
     echo form_input('memlastname');  
     echo "</p>";
 
-    echo "<p>Birth day : ";  
-    echo form_input('membirth');  
+    echo "<p>Birth day : ";
+    $membirth = array(
+        'name'        => 'membirth',
+        'maxlength'   => '8'
+      );  
+    echo form_input($membirth);
     echo "</p>";
 
     
@@ -54,11 +58,17 @@
     echo "</p>";
 
 
-    echo "<p>Phone number : ";  
-    echo form_input('phphonenum');
+    echo "<p>Phone number : ";
+    $phphonenum = array(
+        'name'        => 'phphonenum',
+        'maxlength'   => '11'
+      );  
+    echo form_input($phphonenum);
+
     $phphonenum2 = array(
         'name'        => 'phphonenum2',
-        'placeholder' => '추가입력(선택)'
+        'placeholder' => '추가입력(선택)',
+        'maxlength'   => '11'
       );
     echo form_input($phphonenum2);  
     echo "'-'없이 입력해주세요(ex.01011112222)";
