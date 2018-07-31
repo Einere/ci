@@ -20,10 +20,11 @@
                     </thead>
                     <tbody>
                         <?php
+                            $count = 1;
                             foreach($list as $lt) {
                                 ?>
                                 <tr>
-                                    <th scope="row" style="text-align:center"><?php echo $lt["postseq"];?></th>
+                                    <th scope="row" style="text-align:center"><?php echo $count++;?></th>
                                     <td style="text-align:center"><?php echo $lt["posttitle"];?></td>
                                     <td style="text-align:center"><?php echo $lt["member_memseq"];?></td>
                                     <td style="text-align:center"><?php echo $lt["postviewcount"];?></td>
