@@ -2,9 +2,12 @@
 defined('BASEPATH') OR exit('No direct script access allowed');  
   
 class MemberController extends CI_Controller {  
-  
+    private $conn;
+
     public function index()  
     {  
+        $this->load->library('query/modules/connect');
+        $conn = $this->connect->get_conn();
         $this->login();  
     }  
   
