@@ -85,7 +85,7 @@ class MemberController extends CI_Controller {
         //회원가입 성공
         if ($this->form_validation->run())  
         {   
-            echo "Welcome, you are logged in.";
+            //echo "Welcome, you are logged in.";
 
             //넘어온 데이터 저장
             $id = $this->input->post('memid'); 
@@ -160,8 +160,10 @@ class MemberController extends CI_Controller {
             //  '$memseq', '$phonenum2')
             //      ");
              }
+             echo "<script>alert('회원가입 성공!');</script>";
+             $this->load->view('modules/member/loginView');
         } 
-        
+
         //회원가입 실패
         else {  
             $this->load->view('modules/member/signinView');  
@@ -174,10 +176,10 @@ class MemberController extends CI_Controller {
         $this->load->library('query/modules/connect');
         $conn = $this->connect->get_conn();
 
-        $this->load->library('query/modules/member/loginquery');
+        $this->load->library('query/modules/member/selectquery');
         $id = $this->input->post('username');
         $pw = $this->input->post('password');
-        $result = $this->loginquery->log_in_correctly($conn, $id, $pw);  
+        $result = $this->selectquery->select_confirm($conn, $id, $pw);  
         if ($result -> num_rows == 1)  
         {  
             return true;  
