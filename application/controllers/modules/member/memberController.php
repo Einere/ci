@@ -101,60 +101,64 @@ class MemberController extends CI_Controller {
             $phonenum2 = $this->input->post('phphonenum2'); 
 
             //DB연결
-            $conn = mysqli_connect(
-                "lxrb0tech2.csaf2qenttko.us-east-2.rds.amazonaws.com",
-                "lxrb0tech2", 
-                "luxrobo1!",
-                "kiwi");
-           
-           //member table에 저장
-           mysqli_query($conn, "
-           INSERT INTO member
-           (memid, mempw, memfirstname, memlastname, membirth, memaddr, memnickname)
-           VALUES(
-           '$id', '$pw', '$firstname', '$lastname', '$birth', '$addr', '$nickname')
-            ");
+            $this->load->library('query/modules/connect');
+            $conn = $this->connect->get_conn();
 
-            //memver table에서 memseq가져옴
-            $sql = "SELECT * FROM member WHERE memid = '$id'";
-            $result = mysqli_query($conn, $sql);
-            $row = mysqli_fetch_array($result);
+           //member table에 저장
+        //    mysqli_query($conn, "
+        //    INSERT INTO member
+        //    (memid, mempw, memfirstname, memlastname, membirth, memaddr, memnickname)
+        //    VALUES(
+        //    '$id', '$pw', '$firstname', '$lastname', '$birth', '$addr', '$nickname')
+        //     ");
+            $this->load->library('query/modules/member/insertquery');
+            $this->insertquery->mem_insert($conn, $id, $pw, $firstname, $lastname, $birth, $addr, $nickname);
+            //member table에서 memseq가져옴
+            // $sql = "SELECT * FROM member WHERE memid = '$id'";
+            // $result = mysqli_query($conn, $sql);
+            // $row = mysqli_fetch_array($result);
+            $this->load->library('query/modules/member/selectquery');
+            $row = $this->selectquery->select_memseq($conn, $id);
             $memseq = $row['memseq'];
 
             //emaillist table에 저장
-            mysqli_query($conn, "
-            INSERT INTO emaillist
-            (member_memseq, eemail)
-            VALUES(
-            '$memseq', '$email')
-             ");
+            // mysqli_query($conn, "
+            // INSERT INTO emaillist
+            // (member_memseq, eemail)
+            // VALUES(
+            // '$memseq', '$email')
+            //  ");
+
+             $this->insertquery->email_insert($conn, $memseq, $email);
 
             //email이 두개면
             if($email2!=NULL){
-            mysqli_query($conn, "
-            INSERT INTO emaillist
-            (member_memseq, eemail)
-            VALUES(
-            '$memseq', '$email2')
-                ");
+            // mysqli_query($conn, "
+            // INSERT INTO emaillist
+            // (member_memseq, eemail)
+            // VALUES(
+            // '$memseq', '$email2')
+            //     ");
+            $this->insertquery->email_insert($conn, $memseq, $email2);
             }
 
              //phphonenum table에 저장
-             mysqli_query($conn, "
-             INSERT INTO phone
-             (member_memseq, phphonenum)
-             VALUES(
-             '$memseq', '$phonenum')
-              ");
-
+            //  mysqli_query($conn, "
+            //  INSERT INTO phone
+            //  (member_memseq, phphonenum)
+            //  VALUES(
+            //  '$memseq', '$phonenum')
+            //   ");
+            $this->insertquery->phone_insert($conn, $memseq, $phonenum);
             //phonenum이 두개면
              if($phonenum2!=NULL){
-             mysqli_query($conn, "
-             INSERT INTO phone
-             (member_memseq, phphonenum)
-             VALUES(
-             '$memseq', '$phonenum2')
-                 ");
+                $this->insertquery->phone_insert($conn, $memseq, $phonenum2);
+            //  mysqli_query($conn, "
+            //  INSERT INTO phone
+            //  (member_memseq, phphonenum)
+            //  VALUES(
+            //  '$memseq', '$phonenum2')
+            //      ");
              }
         } 
         

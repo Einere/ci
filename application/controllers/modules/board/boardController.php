@@ -18,8 +18,10 @@
         }
         // 목록 불러오기
         public function lists() {
-            $this->load->model('modules/board/boardModel');
-            $data['list'] = $this -> boardModel -> get_list();
+            $this->load->library('query/modules/connect');
+            $conn = $this->connect->get_conn();
+            $this->load->library('query/modules/board/selectquery');
+            $data['list'] = $this -> selectquery -> get_list($conn);
             $this->load->view('modules/board/listView', $data);
         }
     }
