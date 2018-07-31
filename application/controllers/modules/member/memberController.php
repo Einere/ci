@@ -4,10 +4,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class MemberController extends CI_Controller {  
     private $conn;
 
+    public function __construct()
+    {
+         parent::__construct();
+         $this->load->library('query/modules/connect');
+         $this -> conn = $this->connect->get_conn();
+    }
+
     public function index()  
     {  
-        $this->load->library('query/modules/connect');
-        $conn = $this->connect->get_conn();
         $this->login();  
     }  
   
@@ -103,65 +108,25 @@ class MemberController extends CI_Controller {
             $phonenum = $this->input->post('phphonenum'); 
             $phonenum2 = $this->input->post('phphonenum2'); 
 
-            //DB연결
-            $this->load->library('query/modules/connect');
-            $conn = $this->connect->get_conn();
-
            //member table에 저장
-        //    mysqli_query($conn, "
-        //    INSERT INTO member
-        //    (memid, mempw, memfirstname, memlastname, membirth, memaddr, memnickname)
-        //    VALUES(
-        //    '$id', '$pw', '$firstname', '$lastname', '$birth', '$addr', '$nickname')
-        //     ");
             $this->load->library('query/modules/member/insertquery');
-            $this->insertquery->mem_insert($conn, $id, $pw, $firstname, $lastname, $birth, $addr, $nickname);
-            //member table에서 memseq가져옴
-            // $sql = "SELECT * FROM member WHERE memid = '$id'";
-            // $result = mysqli_query($conn, $sql);
-            // $row = mysqli_fetch_array($result);
+            $this->insertquery->mem_insert($this->conn, $id, $pw, $firstname, $lastname, $birth, $addr, $nickname);
+
             $this->load->library('query/modules/member/selectquery');
-            $row = $this->selectquery->select_memseq($conn, $id);
+            $row = $this->selectquery->select_memseq($this->conn, $id);
             $memseq = $row['memseq'];
 
-            //emaillist table에 저장
-            // mysqli_query($conn, "
-            // INSERT INTO emaillist
-            // (member_memseq, eemail)
-            // VALUES(
-            // '$memseq', '$email')
-            //  ");
-
-             $this->insertquery->email_insert($conn, $memseq, $email);
+             $this->insertquery->email_insert($this->conn, $memseq, $email);
 
             //email이 두개면
             if($email2!=NULL){
-            // mysqli_query($conn, "
-            // INSERT INTO emaillist
-            // (member_memseq, eemail)
-            // VALUES(
-            // '$memseq', '$email2')
-            //     ");
-            $this->insertquery->email_insert($conn, $memseq, $email2);
+                $this->insertquery->email_insert($this->conn, $memseq, $email2);
             }
 
-             //phphonenum table에 저장
-            //  mysqli_query($conn, "
-            //  INSERT INTO phone
-            //  (member_memseq, phphonenum)
-            //  VALUES(
-            //  '$memseq', '$phonenum')
-            //   ");
-            $this->insertquery->phone_insert($conn, $memseq, $phonenum);
+            $this->insertquery->phone_insert($this->conn, $memseq, $phonenum);
             //phonenum이 두개면
              if($phonenum2!=NULL){
-                $this->insertquery->phone_insert($conn, $memseq, $phonenum2);
-            //  mysqli_query($conn, "
-            //  INSERT INTO phone
-            //  (member_memseq, phphonenum)
-            //  VALUES(
-            //  '$memseq', '$phonenum2')
-            //      ");
+                $this->insertquery->phone_insert($this->conn, $memseq, $phonenum2);
              }
              echo "<script>alert('회원가입 성공!');</script>";
              $this->load->view('modules/member/loginView');
@@ -175,14 +140,10 @@ class MemberController extends CI_Controller {
   
     public function validation()  
     {  
-        //$this->load->model('modules/member/loginModel');  
-        $this->load->library('query/modules/connect');
-        $conn = $this->connect->get_conn();
-
         $this->load->library('query/modules/member/selectquery');
         $id = $this->input->post('username');
         $pw = $this->input->post('password');
-        $result = $this->selectquery->select_confirm($conn, $id, $pw);  
+        $result = $this->selectquery->select_confirm($this ->conn, $id, $pw);  
         if ($result -> num_rows == 1)  
         {  
             return true;  
