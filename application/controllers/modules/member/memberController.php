@@ -52,6 +52,7 @@ class MemberController extends CI_Controller {
         if ($this->form_validation->run())   
         {  
             $data = array(  
+
                 'username' => $this->input->post('username'),  
                 'currently_logged_in' => 1  
                 );    
