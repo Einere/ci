@@ -14,7 +14,7 @@
                 <dl>
                 <div style="float:right; margin-bottom:10px;">
                 <?php $id = $this->session->userdata('username');?>
-                    <dt><a href="http://project_kiwi.com/index.php/modules/board/BoardController/upload?id=<?= $id; ?>"><input type="submit" value="등록" width="200px" ></a></dt>
+                    <dt><a href="http://project_kiwi.com/index.php/modules/board/BoardController/upload/?id=<?= $id; ?>"><input type="submit" value="등록" width="200px" ></a></dt>
                 </div></dl>
             </header>
         </div>
@@ -40,7 +40,7 @@
                                 ?>
                                 <tr>
                                     <th scope="row" style="text-align:center"><?= $count--;?></th>
-                                    <td style="text-align:center"><a style="text-decoration:none; color:black" href="http://www.project_kiwi.com/index.php/modules/board/BoardController/detail/<?= $lt["postseq"];?>"><?php echo $lt["posttitle"];?></a></td>
+                                    <td style="text-align:center"><a style="text-decoration:none; color:black" href="http://www.project_kiwi.com/index.php/modules/board/BoardController/detail/<?= $lt["postseq"]?>/<?= 1+$count.'?id='.$this->session->userdata('username');?>"><?= $lt["posttitle"];?></a></td>
                                     <td style="text-align:center"><?= $nickname[$num++];?></td>
                                     <td style="text-align:center"><?= $lt["postviewcount"];?></td>
                                     <td style="text-align:center"><?= $lt["posttime"];?></td>

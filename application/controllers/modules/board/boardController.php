@@ -27,8 +27,19 @@
 
         public function upload() {
             $this->load->library('query/modules/member/memberselect');
+            $data['flag'] = 1;
             $data['memseq'] = $this->memberselect->select_memid($this->conn, $this->input->get('id'));
             $this->load->view('modules/board/uploadView',$data);
+        }
+
+        public function modify($postseq) {
+            $this->load->library('query/modules/board/boardselect');
+            $data['post'] = $this->boardselect->get_detail($this->conn, $postseq);
+            $data['flag'] = 0;
+            echo $this->input->get('id');
+            $this->load->library('query/modules/member/memberselect');
+            $data['nickname'] = $this->input->get('nickname');
+            $this->load->view('modules/board/modifyView',$data);
         }
 
         public function upload_validation() {
@@ -71,18 +82,27 @@
 
         
         //자세히 보기
-        public function detail($postseq) {
+        public function detail($postseq, $count) {
             //echo $this->input->get('poseseq');
-            
+            $id = $this->input->get('id');
+            $data['count'] = $count;
             $this->load->library('query/modules/board/boardselect');
-            $data['post'] = $this->boardselect->get_detail($this->conn, $postseq)->fetch_assoc();
+            $data['post'] = $this->boardselect->get_detail($this->conn, $postseq);
             $this->load->library('query/modules/member/memberselect');
             $result = $this->memberselect->select_memseq($this->conn, $data['post']['member_memseq']);
-            $data['writer'] = $result['memnickname'];
-            // var_dump($data['post']);
-            // echo "<br>";
-            // var_dump($data['writer']);
+            $data['nickname'] = $result['memnickname'];
+            $data['post']['postviewcount']++;
+            $result = $this->memberselect->select_memid($this->conn, $id);
+            $data['login'] = $result['memnickname'];
+            $this->load->library('query/modules/board/boardupdate');
+            $this->boardupdate->count_update($this->conn, $postseq, $data['post']['postviewcount']);            
             $this->load->view('modules/board/detailView', $data);
+        }
+
+        public function delete($postseq) {
+            $this->load->library('query/modules/board/boarddelete');
+            $this->boarddelete->post_delete($this->conn, $postseq);
+            $this->lists();
         }
     }
 ?>
