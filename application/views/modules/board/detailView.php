@@ -22,7 +22,7 @@
             <div align="center">글번호&nbsp;&nbsp;</div>
         </td>
         <td style="font-family:돋음; font-size:12px;">
-            <?=$post['postseq'];?>
+            <?=$count;?>
         </td>
     </tr>
     <tr>
@@ -38,7 +38,7 @@
             <div align="center">작성자&nbsp;&nbsp;</div>
         </td>
         <td style="font-family:돋음; font-size:12px;">
-        <?=$writer;?>
+        <?=$nickname;?>
         </td>
     </tr>
     <tr>
@@ -93,12 +93,14 @@
     </tr>
     <tr align="center" valign="middle">
         <td colspan="5">
-            <a href="<?php echo base_url()."index.php/modules/board/BoardController/modify"; ?>">
+            <?php if($nickname == $login) { ?>
+            <a href="<?php echo base_url()."index.php/modules/board/BoardController/modify/".$post['postseq']."?nickname=".$nickname; ?>">
                 [수정]
             </a>&nbsp;&nbsp;
-            <a href="<?php echo base_url()."index.php/modules/board/BoardController/delete"; ?>">
+            <a href="<?php echo base_url()."index.php/modules/board/BoardController/delete/".$post['postseq']; ?>">
                 [삭제]
             </a>&nbsp;&nbsp;
+            <?php } ?>
             <a href="<?php echo base_url()."index.php/modules/board/BoardController/lists"; ?>">
                 [목록]
             </a>&nbsp;&nbsp;
