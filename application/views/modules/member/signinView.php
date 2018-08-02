@@ -79,6 +79,10 @@
     echo form_input('memnickname');  
     echo "</p>";
 
+    echo "<p>Agree : ";
+    echo form_checkbox('memagree', 'Agree', false);
+    echo "</p>";
+
     echo "<p>";  
     echo form_submit('signin_submit', 'Sign In');  
     echo "</p>";  

@@ -2,12 +2,12 @@
     defined('BASEPATH') OR exit('No direct script access allowed');
 
 class memberinsert {    
-    function mem_insert($conn, $id, $pw, $firstname, $lastname, $birth, $addr, $nickname) {  
+    function mem_insert($conn, $id, $pw, $firstname, $lastname, $birth, $addr, $nickname, $agree) {  
         mysqli_query($conn, "
         INSERT INTO member
-        (memid, mempw, memfirstname, memlastname, membirth, memaddr, memnickname)
+        (memid, mempw, memfirstname, memlastname, membirth, memaddr, memnickname, memagree)
         VALUES(
-        '$id', '$pw', '$firstname', '$lastname', '$birth', '$addr', '$nickname')
+        '$id', '$pw', '$firstname', '$lastname', '$birth', '$addr', '$nickname', '$agree')
          ");
     } 
     

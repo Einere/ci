@@ -91,6 +91,8 @@ class MemberController extends CI_Controller {
 
         $this->form_validation->set_rules('memnickname', 'Nick name', 'required|trim|is_unique[member.memnickname]'); 
 
+        $this->form_validation->set_rules('memagree', 'Agree', 'required|trim|xss_clean');
+
         //회원가입 성공
         if ($this->form_validation->run())  
         {   
@@ -107,27 +109,34 @@ class MemberController extends CI_Controller {
             $email = $this->input->post('eemail'); 
             $email2 = $this->input->post('eemail2'); 
             $phonenum = $this->input->post('phphonenum'); 
-            $phonenum2 = $this->input->post('phphonenum2'); 
+            $phonenum2 = $this->input->post('phphonenum2');
+            $agree = $this->input->post('memagree');
+            if($agree=="Agree") {
+                $agree = 1;
+            }
+            else{
+                $agree = 0;
+            }
 
            //member table에 저장
             $this->load->library('query/modules/member/memberinsert');
-            $this->memberinsert->mem_insert($this->conn, $id, $pw, $firstname, $lastname, $birth, $addr, $nickname);
+            $this->memberinsert->mem_insert($this->conn, $id, $pw, $firstname, $lastname, $birth, $addr, $nickname, $agree);
 
             $this->load->library('query/modules/member/memberselect');
             $row = $this->memberselect->select_memseq($this->conn, $id);
             $memseq = $row['memseq'];
 
-             $this->insertquery->email_insert($this->conn, $memseq, $email);
+            $this->memberinsert->email_insert($this->conn, $memseq, $email);
 
             //email이 두개면
             if($email2!=NULL){
-                $this->insertquery->email_insert($this->conn, $memseq, $email2);
+                $this->memberinsert->email_insert($this->conn, $memseq, $email2);
             }
 
-            $this->insertquery->phone_insert($this->conn, $memseq, $phonenum);
+            $this->memberinsert->phone_insert($this->conn, $memseq, $phonenum);
             //phonenum이 두개면
              if($phonenum2!=NULL){
-                $this->insertquery->phone_insert($this->conn, $memseq, $phonenum2);
+                $this->memberinsert->phone_insert($this->conn, $memseq, $phonenum2);
              }
              echo "<script>alert('회원가입 성공!');</script>";
              $this->load->view('modules/member/loginView');
