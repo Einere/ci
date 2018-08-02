@@ -6,7 +6,7 @@
 <body>  
     <h1>Modify</h1>  
   
-        <form action=<?php echo base_url()."index.php/modules/board/BoardController/upload_validation/0"?> method='post'>
+        <form action=<?php echo base_url()."index.php/modules/board/BoardController/upload_validation/0/".$post['postseq']; ?> method='post'>
             <table border=1 width=100%>
                 <thead>
                     <tr>

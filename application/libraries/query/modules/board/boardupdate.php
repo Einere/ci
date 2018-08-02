@@ -8,6 +8,13 @@ class boardupdate {
          ");
 
     } 
+
+    function count_update($conn, $posttitle, $postcontent, $file) {
+        mysqli_query($conn, "
+        UPDATE post SET posttitle = $posttitle AND postcontent=$postcontent AND file=$file WHERE postseq=$postseq
+         ");
+
+    } 
     
 }  
 ?>  

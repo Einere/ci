@@ -42,7 +42,7 @@
             $this->load->view('modules/board/modifyView',$data);
         }
 
-        public function upload_validation() {
+        public function upload_validation($flag, $postseq) {
             $this->load->library('form_validation');
             $this->form_validation->set_rules('posttitle', 'Post Title', 'required');
             $this->form_validation->set_rules('postcontent', 'Post Content', 'required');
@@ -62,10 +62,13 @@
                     $this->load->library('query/modules/member/memberselect');
                     $row = $this->memberselect->select_memid($this->conn, $id);
                     $memseq = $row['memseq'];
-
-                    $this->load->library('query/modules/board/boardinsert');
-                    $this->boardinsert->post_insert($this->conn, $memseq, $title, $content, $file);
-
+                    if($flag==1) {
+                        $this->load->library('query/modules/board/boardinsert');
+                        $this->boardinsert->post_insert($this->conn, $memseq, $title, $content, $file);
+                    } else {
+                        $this->load->library('query/modules/board/boardupdate');
+                        $this->boardinsert->post_insert($this->conn, $postseq, $title, $content, $file);
+                    }
 
 
                     redirect('modules/board/boardController');
