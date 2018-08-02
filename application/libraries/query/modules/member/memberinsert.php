@@ -1,7 +1,7 @@
 <?php  
     defined('BASEPATH') OR exit('No direct script access allowed');
 
-class insertquery {    
+class memberinsert {    
     function mem_insert($conn, $id, $pw, $firstname, $lastname, $birth, $addr, $nickname) {  
         mysqli_query($conn, "
         INSERT INTO member

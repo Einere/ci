@@ -1,7 +1,7 @@
 <?php
-    class selectquery {
+    class boardselect {
         function get_list($conn) {       
-            $sql = "SELECT * FROM post";
+            $sql = "SELECT * FROM post ORDER BY postseq DESC";
             $result = mysqli_query($conn, $sql);
             return $result;
         }

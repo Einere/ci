@@ -110,11 +110,11 @@ class MemberController extends CI_Controller {
             $phonenum2 = $this->input->post('phphonenum2'); 
 
            //member table에 저장
-            $this->load->library('query/modules/member/insertquery');
-            $this->insertquery->mem_insert($this->conn, $id, $pw, $firstname, $lastname, $birth, $addr, $nickname);
+            $this->load->library('query/modules/member/memberinsert');
+            $this->memberinsert->mem_insert($this->conn, $id, $pw, $firstname, $lastname, $birth, $addr, $nickname);
 
-            $this->load->library('query/modules/member/selectquery');
-            $row = $this->selectquery->select_memseq($this->conn, $id);
+            $this->load->library('query/modules/member/memberselect');
+            $row = $this->memberselect->select_memseq($this->conn, $id);
             $memseq = $row['memseq'];
 
              $this->insertquery->email_insert($this->conn, $memseq, $email);
@@ -141,10 +141,10 @@ class MemberController extends CI_Controller {
   
     public function validation()  
     {  
-        $this->load->library('query/modules/member/selectquery');
+        $this->load->library('query/modules/member/memberselect');
         $id = $this->input->post('username');
         $pw = $this->input->post('password');
-        $result = $this->selectquery->select_confirm($this ->conn, $id, $pw);  
+        $result = $this->memberselect->select_confirm($this ->conn, $id, $pw);  
         if ($result -> num_rows == 1)  
         {  
             return true;  

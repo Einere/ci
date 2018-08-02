@@ -1,6 +1,7 @@
 <?php
     class BoardController extends CI_Controller {
         private $conn;
+        private $id;
         function __construct() {
             parent::__construct();
             $this->load->library('query/modules/connect');
@@ -11,14 +12,22 @@
         }
         // 목록 불러오기
         public function lists() {
-            $this->load->library('query/modules/board/selectquery');
-            $data['list'] = $this->selectquery->get_list($this->conn);
-            $this->load->view('modules/board/listView', $data);
+            $this->load->library('query/modules/board/boardselect');
+            $data['list'] = $this->boardselect->get_list($this->conn);
+            //$this->load->view('modules/board/listView', $data);
+            $data['nickname'] = array();
+            foreach($data['list'] as $lt) {
+                $this->load->library('query/modules/member/memberselect');
+                $row = $this->memberselect->select_memseq($this->conn, $lt['member_memseq']);
+                array_push($data['nickname'], $row['memnickname']);
+            }
+            $this->load->view('modules/board/listView', $data);    
+
         }
 
         public function upload() {
-            $this->load->library('query/modules/member/selectquery');
-            $data['memseq'] = $this->selectquery->select_memseq($this->conn, $this->input->get('id'));
+            $this->load->library('query/modules/member/memberselect');
+            $data['memseq'] = $this->memberselect->select_memid($this->conn, $this->input->get('id'));
             $this->load->view('modules/board/uploadView',$data);
         }
 
@@ -37,14 +46,14 @@
                     
                     $file = NULL;   //아직없음
 
-                    $id = $this->session->userdata('username');
 
-                    $this->load->library('query/modules/member/selectquery');
-                    $row = $this->selectquery->select_memseq($this->conn, $id);
+                    $id = $this->session->userdata('username');
+                    $this->load->library('query/modules/member/memberselect');
+                    $row = $this->memberselect->select_memid($this->conn, $id);
                     $memseq = $row['memseq'];
 
-                    $this->load->library('query/modules/board/insertquery');
-                    $this->insertquery->post_insert($this->conn, $memseq, $title, $content, $file);
+                    $this->load->library('query/modules/board/boardinsert');
+                    $this->boardinsert->post_insert($this->conn, $memseq, $title, $content, $file);
 
 
 
@@ -53,9 +62,10 @@
 
             //등록 실패
             else {  
-                $this->load->library('query/modules/board/selectquery');
-                $data['list'] = $this->selectquery->get_list($this->conn);
-                $this->load->view('modules/board/listView', $data);
+                // $this->load->library('query/modules/board/boardselect');
+                // $data['list'] = $this->boardselect->get_list($this->conn);
+                // $this->load->view('modules/board/listView', $data);
+                $this->lists();
                 }  
         }
 

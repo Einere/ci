@@ -34,13 +34,14 @@
                     </thead>
                     <tbody>
                         <?php
-                            $count = 1;
+                            $count = $list->num_rows;
+                            $num = 0;
                             foreach($list as $lt) {
                                 ?>
                                 <tr>
-                                    <th scope="row" style="text-align:center"><?= $count++;?></th>
-                                    <td style="text-align:center"><?= $lt["posttitle"];?></td>
-                                    <td style="text-align:center"><?= $lt["member_memseq"];?></td>
+                                    <th scope="row" style="text-align:center"><?= $count--;?></th>
+                                    <td style="text-align:center"><a style="text-decoration:none; color:black" href="http://project_kiwi.com/index.php/modules/member/MemberController?postseq=<?= $lt["postseq"];?>"><?php echo $lt["posttitle"];?></a></td>
+                                    <td style="text-align:center"><?= $nickname[$num++];?></td>
                                     <td style="text-align:center"><?= $lt["postviewcount"];?></td>
                                     <td style="text-align:center"><?= $lt["posttime"];?></td>
                                 </tr>
