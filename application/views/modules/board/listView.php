@@ -40,7 +40,7 @@
                                 ?>
                                 <tr>
                                     <th scope="row" style="text-align:center"><?= $count--;?></th>
-                                    <td style="text-align:center"><a style="text-decoration:none; color:black" href="http://project_kiwi.com/index.php/modules/member/MemberController?postseq=<?= $lt["postseq"];?>"><?php echo $lt["posttitle"];?></a></td>
+                                    <td style="text-align:center"><a style="text-decoration:none; color:black" href="http://www.project_kiwi.com/index.php/modules/board/BoardController/detail/<?= $lt["postseq"];?>"><?php echo $lt["posttitle"];?></a></td>
                                     <td style="text-align:center"><?= $nickname[$num++];?></td>
                                     <td style="text-align:center"><?= $lt["postviewcount"];?></td>
                                     <td style="text-align:center"><?= $lt["posttime"];?></td>

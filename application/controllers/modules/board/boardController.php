@@ -69,5 +69,20 @@
                 }  
         }
 
+        
+        //자세히 보기
+        public function detail($postseq) {
+            //echo $this->input->get('poseseq');
+            
+            $this->load->library('query/modules/board/boardselect');
+            $data['post'] = $this->boardselect->get_detail($this->conn, $postseq)->fetch_assoc();
+            $this->load->library('query/modules/member/memberselect');
+            $result = $this->memberselect->select_memseq($this->conn, $data['post']['member_memseq']);
+            $data['writer'] = $result['memnickname'];
+            // var_dump($data['post']);
+            // echo "<br>";
+            // var_dump($data['writer']);
+            $this->load->view('modules/board/detailView', $data);
+        }
     }
 ?>
