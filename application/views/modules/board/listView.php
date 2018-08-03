@@ -54,7 +54,18 @@
         <div>
             <footer id="footer">
                 <dl>
-                    <dt><form action="http://project_kiwi.com/index.php/modules/member/MemberController"><input type="submit" name="logout" value="로그아웃" width=100px></form></dt>
+                    <?php 
+                        if($id!=NULL)
+                        {
+                            $print='logout';
+                        }
+                        else
+                        {
+                            $print='log in';
+                        }
+                    ?>
+                    <dt><form action="http://project_kiwi.com/index.php/modules/member/MemberController"><input type="submit" name="logout" value="<?= $print ?>" width=100px></form></dt>
+                    
                 </dl>
             </footer>
         </div>
