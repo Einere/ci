@@ -8,6 +8,21 @@ class boardupdate {
          ");
 
     } 
+
+    function post_update($conn, $postseq, $posttitle, $postcontent, $postfile) {
+        mysqli_query($conn, "
+        UPDATE post SET posttitle = '$posttitle' WHERE postseq=$postseq;
+         "); 
+
+        mysqli_query($conn, "
+        UPDATE post SET postcontent = '$postcontent' WHERE postseq=$postseq
+         ");
+
+        mysqli_query($conn, "
+        UPDATE post SET postfile = '$postfile' WHERE postseq=$postseq
+         ");
+
+    } 
     
 }  
 ?>  
