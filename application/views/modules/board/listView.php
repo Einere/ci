@@ -14,7 +14,7 @@
                 <dl>
                 <div style="float:right; margin-bottom:10px;">
                 <?php $id = $this->session->userdata('username');?>
-                    <dt><a href="http://project_kiwi.com/index.php/modules/board/BoardController/upload/?id=<?= $id; ?>"><input type="submit" value="등록" width="200px" ></a></dt>
+                    <dt><a href="http://www.project_kiwi.com/index.php/modules/board/BoardController/upload/?id=<?= $id; ?>"><input type="submit" value="등록" width="200px" ></a></dt>
                 </div></dl>
             </header>
         </div>
@@ -25,6 +25,7 @@
                 <table border=1 cellpadding="0" cellspacing="0" width="100%">
                     <thead>
                         <tr>
+                            <th scope="col" style="width:20px;">체크</th>
                             <th scope="col" style="width:100px;">번호</th>
                             <th scope="col" style="width:500px;">제목</th>
                             <th scope="col" style="width:150px">작성자</th>
@@ -39,6 +40,7 @@
                             foreach($list as $lt) {
                                 ?>
                                 <tr>
+                                    <td style="text-align:center"><input type="checkbox" name="checkList"></td>
                                     <th scope="row" style="text-align:center"><?= $count--;?></th>
                                     <td style="text-align:center"><a style="text-decoration:none; color:black" href="http://www.project_kiwi.com/index.php/modules/board/BoardController/detail/<?= $lt["postseq"]?>/<?= 1+$count.'?id='.$this->session->userdata('username');?>"><?= $lt["posttitle"];?></a></td>
                                     <td style="text-align:center"><?= $nickname[$num++];?></td>
