@@ -40,6 +40,7 @@
                             foreach($list as $lt) {
                                 ?>
                                 <tr>
+                                    <td hidden><?= $lt['postseq'];?></td>
                                     <td style="text-align:center"><input type="checkbox" name="checkList"></td>
                                     <th scope="row" style="text-align:center"><?= $count--;?></th>
                                     <td style="text-align:center"><a style="text-decoration:none; color:black" href="http://www.project_kiwi.com/index.php/modules/board/BoardController/detail/<?= $lt["postseq"]?>/<?= 1+$count.'?id='.$this->session->userdata('username');?>"><?= $lt["posttitle"];?></a></td>
