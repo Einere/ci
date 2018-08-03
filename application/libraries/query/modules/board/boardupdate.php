@@ -9,9 +9,17 @@ class boardupdate {
 
     } 
 
-    function count_update($conn, $posttitle, $postcontent, $file) {
+    function post_update($conn, $postseq, $posttitle, $postcontent, $postfile) {
         mysqli_query($conn, "
-        UPDATE post SET posttitle = $posttitle AND postcontent=$postcontent AND file=$file WHERE postseq=$postseq
+        UPDATE post SET posttitle = '$posttitle' WHERE postseq=$postseq;
+         "); 
+
+        mysqli_query($conn, "
+        UPDATE post SET postcontent = '$postcontent' WHERE postseq=$postseq
+         ");
+
+        mysqli_query($conn, "
+        UPDATE post SET postfile = '$postfile' WHERE postseq=$postseq
          ");
 
     } 

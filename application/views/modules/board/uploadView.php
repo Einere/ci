@@ -5,7 +5,7 @@
 </head>  
 <body>  
     <h1>Upload</h1>  
-        <form action=<?php echo base_url()."index.php/modules/board/BoardController/upload_validation/1"?> method='post'>
+        <form action=<?php echo base_url()."index.php/modules/board/BoardController/upload_validation"?> method='post'>
             <table border=1 width=100%>
                 <thead>
                     <tr>

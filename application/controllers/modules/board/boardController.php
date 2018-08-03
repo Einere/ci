@@ -35,14 +35,13 @@
         public function modify($postseq) {
             $this->load->library('query/modules/board/boardselect');
             $data['post'] = $this->boardselect->get_detail($this->conn, $postseq);
-            $data['flag'] = 0;
             echo $this->input->get('id');
             $this->load->library('query/modules/member/memberselect');
             $data['nickname'] = $this->input->get('nickname');
             $this->load->view('modules/board/modifyView',$data);
         }
 
-        public function upload_validation($flag, $postseq) {
+        public function upload_validation() {
             $this->load->library('form_validation');
             $this->form_validation->set_rules('posttitle', 'Post Title', 'required');
             $this->form_validation->set_rules('postcontent', 'Post Content', 'required');
@@ -62,13 +61,10 @@
                     $this->load->library('query/modules/member/memberselect');
                     $row = $this->memberselect->select_memid($this->conn, $id);
                     $memseq = $row['memseq'];
-                    if($flag==1) {
-                        $this->load->library('query/modules/board/boardinsert');
-                        $this->boardinsert->post_insert($this->conn, $memseq, $title, $content, $file);
-                    } else {
-                        $this->load->library('query/modules/board/boardupdate');
-                        $this->boardinsert->post_insert($this->conn, $postseq, $title, $content, $file);
-                    }
+
+                    $this->load->library('query/modules/board/boardinsert');
+                    $this->boardinsert->post_insert($this->conn, $memseq, $title, $content, $file);
+                    
 
 
                     redirect('modules/board/boardController');
@@ -79,6 +75,45 @@
                 // $this->load->library('query/modules/board/boardselect');
                 // $data['list'] = $this->boardselect->get_list($this->conn);
                 // $this->load->view('modules/board/listView', $data);
+                $this->lists();
+                }  
+        }
+
+
+        public function modify_validation($postseq) {
+            $this->load->library('form_validation');
+            $this->form_validation->set_rules('posttitle', 'Post Title', 'required');
+            $this->form_validation->set_rules('postcontent', 'Post Content', 'required');
+             
+            //등록 성공
+            if ($this->form_validation->run())  
+                {   
+
+                    //넘어온 데이터 저장
+                    $title = $this->input->post('posttitle'); 
+                    $content = $this->input->post('postcontent');
+                    
+                    $file = NULL;   //아직없음
+
+
+                    // $id = $this->session->userdata('username');
+                    // $this->load->library('query/modules/member/memberselect');
+                    // $row = $this->memberselect->select_memid($this->conn, $id);
+                    // $memseq = $row['memseq'];
+                    
+                    $this->load->library('query/modules/board/boardupdate');
+                    $this->boardupdate->post_update($this->conn, $postseq, $title, $content, $file);
+
+
+                    redirect('modules/board/boardController');
+                } 
+
+            //등록 실패
+            else {  
+                // $this->load->library('query/modules/board/boardselect');
+                // $data['list'] = $this->boardselect->get_list($this->conn);
+                // $this->load->view('modules/board/listView', $data);
+                var_dump('aaaaaa');
                 $this->lists();
                 }  
         }
