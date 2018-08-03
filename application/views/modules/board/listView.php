@@ -25,7 +25,7 @@
                 <table border=1 cellpadding="0" cellspacing="0" width="100%">
                     <thead>
                         <tr>
-                            <th scope="col" style="width:20px;">체크</th>
+                            <th scope="col" style="width:20px;"><input type="checkbox" name="masterCheck"></th>
                             <th scope="col" style="width:100px;">번호</th>
                             <th scope="col" style="width:500px;">제목</th>
                             <th scope="col" style="width:150px">작성자</th>
@@ -67,9 +67,25 @@
                         }
                     ?>
                     <dt><form action="http://project_kiwi.com/index.php/modules/member/MemberController"><input type="submit" name="logout" value="<?= $print ?>" width=100px></form></dt>
-                    
+                    <dt>
                 </dl>
             </footer>
         </div>
+        <script>
+            let masterCheck = document.getElementsByName('masterCheck')[0];
+            let checkList = document.getElementsByName('checkList');
+            masterCheck.addEventListener('click', function(e){
+                if(masterCheck.checked){
+                    for(let item of checkList){
+                        item.checked = true;
+                    }
+                }
+                else{
+                    for(let item of checkList){
+                        item.checked = false;
+                    }
+                }
+            });
+        </script>
     </body>
 </html>
