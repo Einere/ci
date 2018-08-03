@@ -113,7 +113,6 @@
                 // $this->load->library('query/modules/board/boardselect');
                 // $data['list'] = $this->boardselect->get_list($this->conn);
                 // $this->load->view('modules/board/listView', $data);
-                var_dump('aaaaaa');
                 $this->lists();
                 }  
         }
