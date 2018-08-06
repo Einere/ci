@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8"/>
         <title>BoardList</title>
+        
     </head>
     <body>
         <div>
@@ -34,14 +35,14 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <form name='check_delete' method='post'>
                         <?php
                             $count = $list->num_rows;
                             $num = 0;
                             foreach($list as $lt) {
                                 ?>
                                 <tr>
-                                    <td hidden><?= $lt['postseq'];?></td>
-                                    <td style="text-align:center"><input type="checkbox" name="checkList"></td>
+                                    <td style="text-align:center"><input type="checkbox" value="<?= $lt['postseq'];?>" name="checkList[]"></td>
                                     <th scope="row" style="text-align:center"><?= $count--;?></th>
                                     <td style="text-align:center"><a style="text-decoration:none; color:black" href="http://www.project_kiwi.com/index.php/modules/board/BoardController/detail/<?= $lt["postseq"]?>/<?= 1+$count.'?id='.$this->session->userdata('username');?>"><?= $lt["posttitle"];?></a></td>
                                     <td style="text-align:center"><?= $nickname[$num++];?></td>
@@ -67,14 +68,38 @@
                             $print='log in';
                         }
                     ?>
+                    <dt><input type='button' value='진짜삭제' onClick='mydelete(1)'>
+                    <input type='button' value='가짜삭제' onClick='mydelete(2)'></dt>
+                    </form>
                     <dt><form action="http://project_kiwi.com/index.php/modules/member/MemberController"><input type="submit" name="logout" value="<?= $print ?>" width=100px></form></dt>
+                    
                     <dt>
                 </dl>
             </footer>
         </div>
+
+        <script>
+            function mydelete (index)
+            {
+                // console.log(index);
+                //진짜삭제
+                if(index==1)
+                {
+                    document.check_delete.action="http://project_kiwi.com/index.php/modules/board/BoardController/true_delete";
+                }
+                else
+                {
+                    document.check_delete.action="http://project_kiwi.com/index.php/modules/board/BoardController/false_delete";
+                }
+
+
+                document.check_delete.submit();
+            };    
+        </script>
+
         <script>
             let masterCheck = document.getElementsByName('masterCheck')[0];
-            let checkList = document.getElementsByName('checkList');
+            let checkList = document.getElementsByName('checkList[]');
             masterCheck.addEventListener('click', function(e){
                 if(masterCheck.checked){
                     for(let item of checkList){
@@ -88,5 +113,7 @@
                 }
             });
         </script>
+
+        
     </body>
 </html>

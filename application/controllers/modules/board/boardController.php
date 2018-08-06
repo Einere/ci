@@ -141,5 +141,26 @@
             $this->boarddelete->post_delete($this->conn, $postseq);
             $this->lists();
         }
+
+        public function true_delete(){
+            $this->load->library('query/modules/board/boarddelete');
+            
+            foreach($_POST['checkList'] as $item){
+                $this->boarddelete->post_delete($this->conn, $item);    
+            }
+            redirect('modules/board/boardController');
+        }
+
+        public function false_delete(){
+            $this->load->library('query/modules/board/boardupdate');
+
+            foreach($_POST['checkList'] as $item){
+            $this->boardupdate->postdel_update($this->conn, $item);
+            }
+            redirect('modules/board/boardController');
+        }
+
+
+
     }
 ?>

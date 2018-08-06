@@ -23,6 +23,12 @@ class boardupdate {
          ");
 
     } 
+
+    function postdel_update($conn, $postseq){
+        mysqli_query($conn, "
+        UPDATE post SET postdelny = '1' WHERE postseq=$postseq;
+        ");
+    }
     
 }  
 ?>  
